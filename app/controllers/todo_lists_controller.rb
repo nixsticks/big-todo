@@ -1,36 +1,39 @@
 class TodoListsController < ApplicationController
   def new
-    @list = TodoList.new
+    @todo_list = TodoList.new
+    @todo_list.todos.build
   end
 
   def create
-    @list = TodoList.new(todolist_params)
-    if @list.save
+    @todo_list = TodoList.new(todolist_params)
+
+    if @todo_list.save
       flash[:success] = 'List created!'
-      redirect_to @list
+      redirect_to @todo_list
     else
-      flash.now[:error] = 'Unable to create list.'
-      render 'new'
+      flash[:error] = 'Unable to create list.'
+      redirect_to todo_lists_path
     end
   end
 
   def show
-    @list = TodoList.find(params[:id])
+    @todo_list = TodoList.find(params[:id])
   end
 
   def index
-    @lists = TodoList.all
+    @todo_lists = TodoList.all
+    @todo_list = TodoList.new
   end
 
   def edit
-    @list = TodoList.find(params[:id])
+    @todo_list = TodoList.find(params[:id])
   end
 
   def update
-    @list = TodoList.find(params[:id])
-    if @list.update_params(todolist_params)
+    @todo_list = TodoList.find(params[:id])
+    if @todo_list.update_attributes(todolist_params)
       flash[:success] = 'List updated!'
-      redirect_to @list
+      redirect_to @todo_list
     else
       flash.now[:error] = 'Unable to update list.'
       render 'edit'
@@ -38,12 +41,12 @@ class TodoListsController < ApplicationController
   end
 
   def destroy
-    TodoList.find(params[:id]).delete
-    redirect_to todolists_path
+    Todo.find(params[:id]).delete
+    redirect_to todo_lists_path
   end
 
   private
     def todolist_params
-      params.require(:todolist).permit(:name, :todo_ids)
+      params.require(:todo_list).permit(:name, :todos_attributes => :name)
     end
 end

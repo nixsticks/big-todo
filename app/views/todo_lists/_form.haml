@@ -1,10 +1,10 @@
-%h1= @todo_list.name
-%ul
-  = render @todo_list.todos
-
-%h5 Add new items:
+%h3 Create New List?
 = form_for @todo_list do |f|
   .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label 'Items'
     - 4.times do
       .field
         = f.fields_for :todos, @todo_list.todos.build do |tf|

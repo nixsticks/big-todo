@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20140110150617) do
 
   create_table "todos", force: true do |t|
     t.string   "name"
-    t.integer  "todolist_id"
+    t.integer  "todo_list_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

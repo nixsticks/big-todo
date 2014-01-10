@@ -1,5 +1,5 @@
 TheBigTodo::Application.routes.draw do
-  resources :todolists
+  resources :todo_lists
   resources :todos
   
   # The priority is based upon order of creation: first created -> highest priority.
